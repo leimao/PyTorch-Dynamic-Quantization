@@ -82,6 +82,7 @@ def main():
 
     model, tokenizer = get_bert_qa_model(model_name="deepset/bert-base-cased-squad2")
     model.eval()
+    # https://pytorch.org/docs/stable/torch.quantization.html?highlight=torch%20quantization%20quantize_dynamic#torch.quantization.quantize_dynamic
     quantized_model = torch.quantization.quantize_dynamic(model, {torch.nn.Linear}, dtype=torch.qint8)
 
     print("=" * 75)
@@ -130,7 +131,7 @@ def main():
     model_cuda_latency = measure_inference_latency(model=model, inputs=inputs_cuda, num_samples=num_samples)
     print("CUDA Inference Latency: {:.2f} ms / sample".format(model_cuda_latency * 1000))
 
-    # No CUDA backend for dynamic quantization using PyTorch 1.7.0
+    # No CUDA backend for dynamic quantization in PyTorch 1.7.0
     # quantized_model_cuda = quantized_model.to(cuda_device)
     # quantized_model_cuda_latency = measure_inference_latency(model=quantized_model_cuda, inputs=inputs_cuda, num_samples=num_samples)
     # print("Dynamic Quantized GPU Inference Latency: {:.2f} ms / sample".format(quantized_model_cuda_latency * 1000))
