@@ -3,7 +3,7 @@
 import os
 import time
 import torch
-from transformers import BertTokenizer, BertForQuestionAnswering
+from transformers import BertConfig, BertTokenizer, BertForQuestionAnswering
 
 def measure_inference_latency(model, inputs, num_samples=100):
 
@@ -19,8 +19,9 @@ def measure_inference_latency(model, inputs, num_samples=100):
 def get_bert_qa_model(model_name="deepset/bert-base-cased-squad2", cache_dir="./saved_models"):
 
     # https://huggingface.co/transformers/model_doc/bert.html#transformers.BertForQuestionAnswering
+    config = BertConfig.from_pretrained(model_name, cache_dir=cache_dir)
     tokenizer = BertTokenizer.from_pretrained(model_name, cache_dir=cache_dir)
-    model = BertForQuestionAnswering.from_pretrained(model_name, cache_dir=cache_dir, return_dict=True)
+    model = BertForQuestionAnswering.from_pretrained(model_name, config=config, cache_dir=cache_dir)
 
     return model, tokenizer
 
