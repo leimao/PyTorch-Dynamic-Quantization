@@ -9,19 +9,19 @@ PyTorch dynamic quantization example for BERT-QA.
 ### Build Docker Image
 
 ```
-docker build -f docker/pytorch.Dockerfile --no-cache --tag=pytorch:1.7.0 .
+$ docker build -f docker/pytorch.Dockerfile --no-cache --tag=pytorch:1.7.0 .
 ```
 
 ### Run Docker Container
 
 ```
-docker run -it --rm --gpus device=0 -v $(pwd):/mnt pytorch:1.7.0
+$ docker run -it --rm --gpus device=0 -v $(pwd):/mnt pytorch:1.7.0
 ```
 
 ### Run BERT-QA
 
 ```
-python qa.py
+$ python qa.py
 ```
 
 ## References
